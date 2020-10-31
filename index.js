@@ -31,7 +31,6 @@ express()
     })
     .post('/test', (req,res) => {
         console.log(req.body)
-        res.send(req.body)
         
         
 
@@ -39,7 +38,8 @@ express()
         .then((database) => {
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
-            res.json(database);
+            // res.json(database);
+            res.send(req.body)
         }, (err) => console.log(err))
         .catch((err) => {console.log(err)});
 
