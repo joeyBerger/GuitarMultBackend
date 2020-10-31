@@ -35,19 +35,21 @@ express()
     
         
         UserData.updateMany({
-            // "_id": dataArr["id"],
             "id": req.body.id
         },
             {$set:
                 {
                     "scaleLevel": req.body.scaleLevel,
-                    // "testCases.$.completedObjects": dataArr[id].completedObjects,
-                    // "testCases.$.issuesObjects": dataArr[id].issuesObjects,
+                    "arpeggioLevel" : req.body.arpeggioLevel,
+                    "intervalLevel" : req.body.intervalLevel,
+                    "et_scales" : req.body.et_scales,
+                    "et_chords" : req.body.et_chords,
+                    "appUnlocked" : req.body.appUnlocked,
                 },
             },
         )
         .then((returnObj) => {
-            console.log('done',returnObj)
+            // console.log('done',returnObj)
             res.send(req.body)
         })
         .catch((err) => console.log(err))
