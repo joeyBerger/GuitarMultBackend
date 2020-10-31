@@ -8,6 +8,6 @@ express()
 //   .set('view engine', 'ejs')
 //   .get('/', (req, res) => res.render('pages/index'))
 .get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send(JSON.stringify({'Hello World!' : "test"}))
   })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
