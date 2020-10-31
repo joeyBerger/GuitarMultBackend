@@ -29,11 +29,18 @@ express()
     .get('/', (req, res) => {
         res.send(JSON.stringify({'Hello World!' : "test"}))
     })
+    .post('/postInitialData', (req,res) => {
+        console.log('posting initial',req.body)
+        UserData.create(req.body)
+        .then((newDB) => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            // res.json(database);
+            res.send(req.body)
+        }, (err) => console.log(err))
+        .catch((err) => {console.log(err)});
+    })
     .post('/updateUserData', (req,res) => {
-        console.log(req.body)
-        
-    
-        
         UserData.updateMany({
             "id": req.body.id
         },
@@ -53,19 +60,6 @@ express()
             res.send(req.body)
         })
         .catch((err) => console.log(err))
-
-
-
-        // UserData.create(req.body)
-        // .then((database) => {
-        //     res.statusCode = 200;
-        //     res.setHeader('Content-Type', 'application/json');
-        //     // res.json(database);
-        //     res.send(req.body)
-        // }, (err) => console.log(err))
-        // .catch((err) => {console.log(err)});
-
-
     })
     .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
