@@ -29,19 +29,39 @@ express()
     .get('/', (req, res) => {
         res.send(JSON.stringify({'Hello World!' : "test"}))
     })
-    .post('/test', (req,res) => {
+    .post('/updateUserData', (req,res) => {
         console.log(req.body)
         
+    
         
-
-        UserData.create(req.body)
-        .then((database) => {
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json');
-            // res.json(database);
+        UserData.updateMany({
+            // "_id": dataArr["id"],
+            "id": req.body.id
+        },
+            {$set:
+                {
+                    "scaleLevel": req.body.scaleLevel,
+                    // "testCases.$.completedObjects": dataArr[id].completedObjects,
+                    // "testCases.$.issuesObjects": dataArr[id].issuesObjects,
+                },
+            },
+        )
+        .then((returnObj) => {
+            console.log('done',returnObj)
             res.send(req.body)
-        }, (err) => console.log(err))
-        .catch((err) => {console.log(err)});
+        })
+        .catch((err) => console.log(err))
+
+
+
+        // UserData.create(req.body)
+        // .then((database) => {
+        //     res.statusCode = 200;
+        //     res.setHeader('Content-Type', 'application/json');
+        //     // res.json(database);
+        //     res.send(req.body)
+        // }, (err) => console.log(err))
+        // .catch((err) => {console.log(err)});
 
 
     })
