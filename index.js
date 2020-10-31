@@ -2,6 +2,22 @@ const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose');
+
+const UserData = require('./UserData')
+// const connection = "mongodb+srv://joeyBerger:CrowdControl1!@cluster0.sxuu9.mongodb.net/database?retryWrites=true&w=majority";
+//mongoDBGuitarMultPass
+const connection = "mongodb+srv://joeybergermusic:mongoDBGuitarMultPass@cluster0.p26xi.mongodb.net/database?retryWrites=true&w=majority";
+
+mongoose.connect(connection,{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+    .then(() => {
+        console.log("Database Connected Successfully");
+    })
+    .catch(err => {
+        console.log(err)
+        useMongoDB = false;
+    });
+
 
 express()
     .use(bodyParser.json())
@@ -15,7 +31,23 @@ express()
     })
     .post('/test', (req,res) => {
         console.log(req.body)
-        // res.send(req.body)
-        res.send(JSON.stringify({'test':'test'}))
+        res.send(req.body)
+        
+        
+
+        UserData.create(req.body)
+        .then((database) => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(database);
+        }, (err) => console.log(err))
+        .catch((err) => {console.log(err)});
+
+
     })
     .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+
+
+
+
+
