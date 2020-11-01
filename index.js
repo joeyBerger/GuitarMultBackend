@@ -62,7 +62,7 @@ express()
         console.log('requesting level update')
         reponseObj = {
             updateLevels : true,
-            testThing : "test",
+            scaleLevel : "3.0",
         }
         res.send(JSON.stringify(reponseObj))
     })
