@@ -61,8 +61,8 @@ express()
     .get('/requestLevelUpdate', (req, res) => {
         console.log('requesting level update')
         reponseObj = {
-            updateLevels : true,
-            scaleLevel : "15.0",
+            // updateLevels : true,
+            // scaleLevel : "15.0",
             // appUnlocked : "1.0",
         }
         res.send(JSON.stringify(reponseObj))
