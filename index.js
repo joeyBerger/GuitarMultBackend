@@ -61,8 +61,8 @@ express()
     .get('/requestLevelUpdate', (req, res) => {
         console.log('requesting level update')
         reponseObj = {
-            updateLevels = true,
-            testThing = "test",
+            updateLevels : true,
+            testThing : "test",
         }
         res.send(JSON.stringify(reponseObj))
     })
