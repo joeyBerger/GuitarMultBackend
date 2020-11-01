@@ -59,6 +59,7 @@ express()
         .catch((err) => console.log(err))
     })
     .get('/requestLevelUpdate', (req, res) => {
+        console.log('requesting level update')
         reponseObj = {
             updateLevels = true,
             testThing = "test",
