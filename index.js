@@ -38,6 +38,7 @@ express()
         .catch((err) => {console.log(err)});
     })
     .post('/updateUserData', (req,res) => {
+        console.log(req.body);
         UserData.updateMany({
             "id": req.body.id
         },
