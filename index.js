@@ -23,9 +23,6 @@ express()
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: true }))
     .use(express.static(path.join(__dirname, 'public')))
-//   .set('views', path.join(__dirname, 'views'))
-//   .set('view engine', 'ejs')
-//   .get('/', (req, res) => res.render('pages/index'))
     .get('/', (req, res) => {
         res.send(JSON.stringify({'Hello World!' : "test"}))
     })
@@ -60,6 +57,13 @@ express()
             res.send(req.body)
         })
         .catch((err) => console.log(err))
+    })
+    .get('/requestLevelUpdate', (req, res) => {
+        reponseObj = {
+            updateLevels = true,
+            testThing = "test",
+        }
+        res.send(JSON.stringify(reponseObj))
     })
     .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
