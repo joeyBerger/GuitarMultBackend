@@ -63,6 +63,7 @@ express()
         reponseObj = {
             updateLevels : true,
             scaleLevel : "3.0",
+            appUnlocked : "1.0",
         }
         res.send(JSON.stringify(reponseObj))
     })
