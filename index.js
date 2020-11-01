@@ -61,15 +61,44 @@ express()
     .get('/requestLevelUpdate', (req, res) => {
         console.log('requesting level update')
         reponseObj = {
-            // updateLevels : true,
-            // scaleLevel : "3.0",
+            updateLevels : true,
+            scaleLevel : "15.0",
             // appUnlocked : "1.0",
         }
         res.send(JSON.stringify(reponseObj))
     })
+    .post('/setUserValues', (req,res) => {
+        console.log(req.body.auth);
+        let reponseObj = {
+            success : false,
+            dataUpdated : false,
+        }
+        res.send(JSON.stringify(reponseObj))
+        return
+        if (req.body.auth && req.body.auth === "test") {
+            console.log('valid request')
+            UserData.updateMany({
+                "id": req.body.id
+            },
+                {$set:
+                    {
+                        "scaleLevel": req.body.scaleLevel,
+                        "arpeggioLevel" : req.body.arpeggioLevel,
+                        "intervalLevel" : req.body.intervalLevel,
+                        "et_scales" : req.body.et_scales,
+                        "et_chords" : req.body.et_chords,
+                        "appUnlocked" : req.body.appUnlocked,
+                    },
+                },
+            )
+            .then((returnObj) => {
+                res.send(req.body)
+            })
+            .catch((err) => console.log(err))
+            //"arpeggioLevel": 1.2, "appUnlocked": 0, "et_scales": 0.0, "et_chords": 0.0, "scaleLevel": 0.0, "intervalLevel": 0.0, "id": 54050868-48A9-4C24-A9DE-2294A37771B7
+        } else {
+            console.log('sending response')
+            res.send(JSON.stringify(reponseObj))
+        }            
+    })
     .listen(PORT, () => console.log(`Listening on ${ PORT }`))
-
-
-
-
-
