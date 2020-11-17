@@ -73,7 +73,7 @@ express()
                 res.send({updateLevels : false}) 
                 return;
             }
-            res.send(user)
+            res.send(user[0])
             
         })
         .catch((err) => console.log(err))
