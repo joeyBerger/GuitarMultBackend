@@ -68,6 +68,8 @@ express()
                     res.send(req.body)
                 })
                 .catch((err) => console.log(err))
+            } else {
+                res.send({message:"could not update because waiting on data update"})
             }
         })
         .catch((err) => console.log(err))
