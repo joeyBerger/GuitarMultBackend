@@ -60,8 +60,9 @@ express()
         })
         .catch((err) => console.log(err))
     })
-    .get('/requestLevelUpdate', (req, res) => {
-        console.log('requesting level update',req.body)
+    .get('/requestLevelUpdate/:id', (req, res) => {
+        
+        console.log('requesting level update',req.params)
 
         reponseObj = {
             // updateLevels : true,
