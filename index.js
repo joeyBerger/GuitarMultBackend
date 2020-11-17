@@ -68,11 +68,13 @@ express()
             id : req.params.id
         })
         .then((user) => {
+            console.log('returned user',user)
             if (!user) {
                 res.send({updateLevels : false}) 
                 return;
             }
             res.send(user)
+            .catch((err) => console.log(err))
         })
 
         reponseObj = {
