@@ -77,12 +77,12 @@ express()
             .catch((err) => console.log(err))
         })
 
-        reponseObj = {
-            // updateLevels : true,
-            // scaleLevel : "15.0",
-            // appUnlocked : "1.0",
-        }
-        res.send(JSON.stringify(reponseObj))
+        // reponseObj = {
+        //     // updateLevels : true,
+        //     // scaleLevel : "15.0",
+        //     // appUnlocked : "1.0",
+        // }
+        // res.send(JSON.stringify(reponseObj))
     })
     .post('/setUserValues', (req,res) => {
         console.log(req.body.auth);
