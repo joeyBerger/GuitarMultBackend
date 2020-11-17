@@ -39,31 +39,40 @@ express()
     })
     .post('/updateUserData', (req,res) => {
         console.log(req.body);
-        UserData.updateMany({
-            "id": req.body.id
-        },
-            {$set:
-                {
-                    "scaleLevel": req.body.scaleLevel,
-                    "arpeggioLevel" : req.body.arpeggioLevel,
-                    "intervalLevel" : req.body.intervalLevel,
-                    "et_scales" : req.body.et_scales,
-                    "et_chords" : req.body.et_chords,
-                    "appUnlocked" : req.body.appUnlocked,
-                    "currentAppVersion" : req.body.currentAppVersion,
+        UserData.find({
+            id : req.body.id
+        })
+        .then((user) => {
+            if (!user) {
+                res.send({updateLevels : false}) 
+                return;
+            }
+            if (user[0] && user[0].dataUpdate !== true) {
+                UserData.updateMany({
+                    "id": req.body.id
                 },
-            },
-        )
-        .then((returnObj) => {
-            console.log('done',returnObj)
-            res.send(req.body)
+                    {$set:
+                        {
+                            "scaleLevel": req.body.scaleLevel,
+                            "arpeggioLevel" : req.body.arpeggioLevel,
+                            "intervalLevel" : req.body.intervalLevel,
+                            "et_scales" : req.body.et_scales,
+                            "et_chords" : req.body.et_chords,
+                            "appUnlocked" : req.body.appUnlocked,
+                            "currentAppVersion" : req.body.currentAppVersion,
+                        },
+                    },
+                )
+                .then((returnObj) => {
+                    console.log('done',returnObj)
+                    res.send(req.body)
+                })
+                .catch((err) => console.log(err))
+            }
         })
         .catch((err) => console.log(err))
     })
     .get('/requestLevelUpdate/:id', (req, res) => {
-        
-        console.log('requesting level update',req.params)
-
         UserData.find({
             id : req.params.id
         })
@@ -77,12 +86,6 @@ express()
             
         })
         .catch((err) => console.log(err))
-        // reponseObj = {
-        //     // updateLevels : true,
-        //     // scaleLevel : "15.0",
-        //     // appUnlocked : "1.0",
-        // }
-        // res.send(JSON.stringify(reponseObj))
     })
     .post('/setUserValues', (req,res) => {
         console.log(req.body.auth);
