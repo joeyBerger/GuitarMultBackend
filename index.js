@@ -74,9 +74,9 @@ express()
                 return;
             }
             res.send(user)
-            .catch((err) => console.log(err))
+            
         })
-
+        .catch((err) => console.log(err))
         // reponseObj = {
         //     // updateLevels : true,
         //     // scaleLevel : "15.0",
