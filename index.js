@@ -50,17 +50,19 @@ express()
                     "et_scales" : req.body.et_scales,
                     "et_chords" : req.body.et_chords,
                     "appUnlocked" : req.body.appUnlocked,
+                    "currentAppVersion" : req.body.currentAppVersion,
                 },
             },
         )
         .then((returnObj) => {
-            // console.log('done',returnObj)
+            console.log('done',returnObj)
             res.send(req.body)
         })
         .catch((err) => console.log(err))
     })
     .get('/requestLevelUpdate', (req, res) => {
-        console.log('requesting level update')
+        console.log('requesting level update',req.body)
+
         reponseObj = {
             // updateLevels : true,
             // scaleLevel : "15.0",
@@ -100,6 +102,21 @@ express()
         } else {
             console.log('sending response')
             res.send(JSON.stringify(reponseObj))
-        }            
+        }
+    })
+    .delete('/deleteDB', (req,res) => {
+        let reponseObj = {requestSuccess : false}
+        if (req.body.auth && req.body.auth === 'borninlasvegasin1984') {
+            UserData.remove({})
+            .then((resp) => {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                reponseObj.requestSuccess = true;
+                res.send(JSON.stringify(reponseObj));
+            }, (err) => next(err))
+            .catch((err) => next(err));    
+        } else {
+            res.send(JSON.stringify(reponseObj));
+        }
     })
     .listen(PORT, () => console.log(`Listening on ${ PORT }`))
