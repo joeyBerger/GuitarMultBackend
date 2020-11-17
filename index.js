@@ -64,6 +64,17 @@ express()
         
         console.log('requesting level update',req.params)
 
+        UserData.find({
+            id : req.params.id
+        })
+        .then((user) => {
+            if (!user) {
+                res.send({updateLevels : false}) 
+                return;
+            }
+            res.send(user)
+        })
+
         reponseObj = {
             // updateLevels : true,
             // scaleLevel : "15.0",
