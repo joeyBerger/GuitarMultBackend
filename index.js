@@ -84,8 +84,18 @@ express()
                 res.send({updateLevels : false}) 
                 return;
             }
-            res.send(user[0])
-            
+            user = user[0]
+            if (user.dataUpdate === true) {
+                res.send(user);
+                UserData.findOneAndUpdate({
+                    id : req.params.id
+                })
+                .then((user) => {
+                    console.log('user',user)
+                })
+                .catch(err => console.log(err))
+            } 
+            else res.send({message : 'Data update not applicable'})          
         })
         .catch((err) => console.log(err))
     })
