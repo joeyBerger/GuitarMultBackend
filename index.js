@@ -92,6 +92,8 @@ express()
                 })
                 .then((user) => {
                     console.log('user',user)
+                    user.dataUpdate = false;
+                    user.save()
                 })
                 .catch(err => console.log(err))
             } 
