@@ -22,8 +22,6 @@ express()
     .use(bodyParser.urlencoded({ extended: true }))
     .use(express.static(path.join(__dirname, 'public')))
     .get('/', (req, res) => {
-        // res.send(JSON.stringify({'Hello World!' : "test"}))
-        // res.send('<h1>TEST</h1>')
         let responseHTML = '';
         UserData.find({})
         .then(users => {
@@ -37,7 +35,6 @@ express()
                 </ul>
                 <hr>`
             })
-
             res.send(responseHTML)
         })
     })
@@ -47,13 +44,11 @@ express()
         .then((newDB) => {
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
-            // res.json(database);
             res.send(req.body)
         }, (err) => console.log(err))
         .catch((err) => {console.log(err)});
     })
     .post('/updateUserData', (req,res) => {
-        console.log(req.body);
         UserData.find({
             id : req.body.id
         })
@@ -94,7 +89,6 @@ express()
             id : req.params.id
         })
         .then((user) => {
-            console.log('returned user',user)
             if (!user) {
                 res.send({updateLevels : false}) 
                 return;
@@ -117,7 +111,6 @@ express()
         .catch((err) => console.log(err))
     })
     .post('/setUserValues', (req,res) => {
-        console.log(req.body.auth);
         let reponseObj = {
             success : false,
             dataUpdated : false,
