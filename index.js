@@ -17,14 +17,29 @@ mongoose.connect(connection,{ useNewUrlParser: true, useUnifiedTopology: true, u
         console.log(err)
         useMongoDB = false;
     });
-
-
 express()
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: true }))
     .use(express.static(path.join(__dirname, 'public')))
     .get('/', (req, res) => {
-        res.send(JSON.stringify({'Hello World!' : "test"}))
+        // res.send(JSON.stringify({'Hello World!' : "test"}))
+        // res.send('<h1>TEST</h1>')
+        let responseHTML = '';
+        UserData.find({})
+        .then(users => {
+            responseHTML += `${users.length} Total Users<hr>`;
+            users.forEach(user => {
+                responseHTML += 
+                `<ul>
+                <li>Scale Level: ${user.scaleLevel}</li>
+                <li>Arpeggio Level Level: ${user.arpeggioLevel}</li>
+                <li>Interval Level: ${user.intervalLevel}</li>                
+                </ul>
+                <hr>`
+            })
+
+            res.send(responseHTML)
+        })
     })
     .post('/postInitialData', (req,res) => {
         console.log('posting initial',req.body)
@@ -97,7 +112,7 @@ express()
                 })
                 .catch(err => console.log(err))
             } 
-            else res.send({message : 'Data update not applicable'})          
+            else res.send({message : 'Data update not applicable'})
         })
         .catch((err) => console.log(err))
     })
